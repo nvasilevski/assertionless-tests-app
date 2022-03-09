@@ -9,13 +9,13 @@ class FixedAssertionlessTestsTest < ActiveSupport::TestCase
 
   test "ensure to reset tables state" do
     renamed = false
-    DbConnectionHelper.rename_table(:my_dummy_table, :old_dummy_table)
+    DbConnectionHelper.rename_table(:dummy_table, :old_dummy_table)
     renamed = true
 
     assert_equal(1, DbConnectionHelper.execute("select 1 from old_dummy_table;"))
   ensure
     if renamed
-      ConnectionHelper.rename_table(:old_dummy_table, :my_dummy_table)
+      DbConnectionHelper.rename_table(:old_dummy_table, :dummy_table)
     end
   end
 
