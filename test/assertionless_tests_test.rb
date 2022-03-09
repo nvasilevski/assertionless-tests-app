@@ -22,4 +22,10 @@ class AssertionlessTestsTest < ActiveSupport::TestCase
   test "my code doesn't raise" do
     MyCode.doesnt_raise
   end
+
+  test "do nothing unless condition" do
+    if DbConnectionHelper.mysql_adapter?
+      assert_equal("mysql2", DbConnectionHelper.adapter_name)
+    end
+  end
 end

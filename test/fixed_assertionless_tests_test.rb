@@ -22,4 +22,14 @@ class FixedAssertionlessTestsTest < ActiveSupport::TestCase
   test "my code doesn't raise" do
     assert_nothing_raised { MyCode.doesnt_raise }
   end
+
+  test "do nothing by skipping test unless condition" do
+    skip unless DbConnectionHelper.mysql_adapter?
+
+    assert_equal("mysql2", DbConnectionHelper.adapter_name)
+  end
+
+  test "do nothing by not defining test unless condition" do
+    assert_equal("mysql2", DbConnectionHelper.adapter_name)
+  end if DbConnectionHelper.mysql_adapter?
 end

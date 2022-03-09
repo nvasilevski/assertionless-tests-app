@@ -6,4 +6,12 @@ module DbConnectionHelper
   def self.execute(_query)
     1
   end
+
+  def self.mysql_adapter?
+    false
+  end
+
+  def self.adapter_name
+    "sqlite3"
+  end
 end
