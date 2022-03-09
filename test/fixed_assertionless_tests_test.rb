@@ -18,4 +18,8 @@ class FixedAssertionlessTestsTest < ActiveSupport::TestCase
       ConnectionHelper.rename_table(:old_dummy_table, :dummy_table)
     end
   end
+
+  test "my code doesn't raise" do
+    assert_nothing_raised { MyCode.doesnt_raise }
+  end
 end
