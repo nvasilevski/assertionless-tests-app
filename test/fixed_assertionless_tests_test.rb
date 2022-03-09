@@ -9,13 +9,13 @@ class FixedAssertionlessTestsTest < ActiveSupport::TestCase
 
   test "ensure to reset tables state" do
     renamed = false
-    DbConnectionHelper.rename_table(:dummy_table, :old_dummy_table)
+    DbConnectionHelper.rename_table(:my_dummy_table, :old_dummy_table)
     renamed = true
 
     assert_equal(1, DbConnectionHelper.execute("select 1 from old_dummy_table;"))
   ensure
     if renamed
-      ConnectionHelper.rename_table(:old_dummy_table, :dummy_table)
+      ConnectionHelper.rename_table(:old_dummy_table, :my_dummy_table)
     end
   end
 
@@ -32,4 +32,15 @@ class FixedAssertionlessTestsTest < ActiveSupport::TestCase
   test "do nothing by not defining test unless condition" do
     assert_equal("mysql2", DbConnectionHelper.adapter_name)
   end if DbConnectionHelper.mysql_adapter?
+
+  test "return value from instance" do
+    my_object = MyObject.new
+    my_object.execute_this_block_later_in_the_object_instance do
+      my_value
+    end
+
+    my_object.my_value = "expected_value"
+
+    assert_equal "expected_value", my_object.execute_stored_block
+  end
 end

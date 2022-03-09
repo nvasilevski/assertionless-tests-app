@@ -28,4 +28,15 @@ class AssertionlessTestsTest < ActiveSupport::TestCase
       assert_equal("mysql2", DbConnectionHelper.adapter_name)
     end
   end
+
+  test "return value from instance" do
+    my_object = MyObject.new
+    my_object.execute_this_block_later_in_the_object_instance do
+      return my_value
+    end
+
+    my_object.my_value = "expected_value"
+
+    assert_equal "expected_value", my_object.execute_stored_block
+  end
 end
