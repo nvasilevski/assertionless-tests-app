@@ -43,4 +43,9 @@ class FixedAssertionlessTestsTest < ActiveSupport::TestCase
 
     assert_equal "expected_value", my_object.execute_stored_block
   end
+
+  test "using custom message instead of flunk" do
+    post = Post.first
+    assert_predicate post.body, :present?, "Post should have non-empty body"
+  end
 end
