@@ -1,0 +1,1 @@
+Demo app with tests that do not perform or do not report assertions
