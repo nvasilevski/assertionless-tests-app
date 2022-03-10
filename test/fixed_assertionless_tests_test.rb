@@ -58,4 +58,14 @@ class FixedAssertionlessTestsTest < ActiveSupport::TestCase
       assert_predicate published_post.reviewer, :present?
     end
   end
+
+  test "wrong minitest stubbing" do
+    serializer_mock = Minitest::Mock.new
+    my_elements = [:a, :b]
+    my_collection = MyCollection.new(serializer: serializer_mock, elements: my_elements)
+    expected_serialized_data = "[my_serialized_collection]"
+    
+    serializer_mock.expect(:encode, expected_serialized_data, [my_elements])
+    assert_equal expected_serialized_data, my_collection.serialize
+  end
 end

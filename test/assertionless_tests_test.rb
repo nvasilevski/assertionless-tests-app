@@ -54,5 +54,12 @@ class AssertionlessTestsTest < ActiveSupport::TestCase
   end
 
   test "wrong minitest stubbing" do
+    serializer_mock = Minitest::Mock.new
+    my_collection = MyCollection.new(serializer: serializer_mock)
+    expected_serialized_data = "[my_serialized_collection]"
+    
+    serializer_mock.expect(:encode, expected_serialized_data) do
+      assert_equal expected_serialized_data, my_collection.serialize
+    end
   end
 end
