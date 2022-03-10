@@ -52,4 +52,7 @@ class AssertionlessTestsTest < ActiveSupport::TestCase
       assert_predicate published_post.reviewer, :present?
     end
   end
+
+  test "wrong minitest stubbing" do
+  end
 end
