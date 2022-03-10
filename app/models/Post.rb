@@ -6,4 +6,8 @@ class Post
     post.body = "default body"
     post
   end
+
+  def self.published
+    []
+  end
 end

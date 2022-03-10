@@ -48,4 +48,14 @@ class FixedAssertionlessTestsTest < ActiveSupport::TestCase
     post = Post.first
     assert_predicate post.body, :present?, "Post should have non-empty body"
   end
+
+  test "all published posts should have a reviewer" do
+    published_posts = Post.published.to_a
+
+    flunk("required pre-condition: no published posts to verify") if published_posts.empty?
+
+    published_posts.each do |published_post|
+      assert_predicate published_post.reviewer, :present?
+    end
+  end
 end
