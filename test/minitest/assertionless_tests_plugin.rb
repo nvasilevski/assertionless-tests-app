@@ -37,6 +37,6 @@ end
 
 module Minitest
   def self.plugin_assertionless_tests_init(options)
-    self.reporter << AssertionlessTestsReporter.new(options)
+    #self.reporter << AssertionlessTestsReporter.new(options)
   end
 end
