@@ -17,7 +17,7 @@ class AssertionlessTestsTest < ActiveSupport::TestCase
   ensure
     return unless renamed
 
-    ConnectionHelper.rename_table(:old_dummy_table, :dummy_table)
+    DbConnectionHelper.rename_table(:old_dummy_table, :dummy_table)
   end
 
   test "my code doesn't raise" do
