@@ -2,7 +2,12 @@ require 'test_helper'
 
 class FixedAssertionlessTestsTest < ActiveSupport::TestCase
   test "verifying a mock" do
-    mock = Minitest::Mock.new.expect(:my_method, 'return_value', ['arg_value'])
+    mock = Minitest::Mock.new
+    mock.expect(
+      :my_method,
+      'return_value',
+      ['arg_value']
+    )
     mock.my_method('arg_value')
     assert_mock(mock)
   end
@@ -20,7 +25,9 @@ class FixedAssertionlessTestsTest < ActiveSupport::TestCase
   end
 
   test "my code doesn't raise" do
-    assert_nothing_raised { MyCode.doesnt_raise }
+    assert_nothing_raised do
+      MyCode.doesnt_raise
+    end
   end
 
   test "do nothing by skipping test unless condition" do
@@ -46,13 +53,16 @@ class FixedAssertionlessTestsTest < ActiveSupport::TestCase
 
   test "using custom message instead of flunk" do
     post = Post.first
-    assert_predicate post.body, :present?, "Post should have non-empty body"
+    message = "Post should have non-empty body"
+    assert_predicate post.body, :present?
   end
 
   test "all published posts should have a reviewer" do
     published_posts = Post.published.to_a
 
-    flunk("required pre-condition: no published posts to verify") if published_posts.empty?
+    if published_posts.empty?
+      flunk("required pre-condition: no published posts to verify")
+    end
 
     published_posts.each do |published_post|
       assert_predicate published_post.reviewer, :present?
