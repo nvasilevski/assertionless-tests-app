@@ -61,4 +61,32 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.around(:each) do |example|
+    AssertionsCounter.assertions_count = 0
+    example.run
+    if AssertionsCounter.assertions_count.zero?
+      #$stderr.puts("test at #{example.location} seem to have no expectations")
+    end
+  end
+end
+
+module ExpectationTargetPatch
+  module ClassMethods
+    def for(...)
+      res = super(...)
+      AssertionsCounter.assertions_count += 1
+      res
+    end
+  end
+end
+
+
+RSpec::Expectations::ExpectationTarget.singleton_class.prepend(ExpectationTargetPatch::ClassMethods)
+
+class AssertionsCounter
+  @assertions_count = 0
+  class << self
+    attr_accessor :assertions_count
+  end
 end
