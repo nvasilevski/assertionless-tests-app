@@ -23,7 +23,7 @@ class AssertionlessTestsTest < ActiveSupport::TestCase
     DbConnectionHelper.rename_table(:old_dummy_table, :dummy_table)
   end
 
-  test "my code doesn't raise" do
+  test "passed if nothing raised" do
     MyCode.doesnt_raise
   end
 
@@ -46,7 +46,9 @@ class AssertionlessTestsTest < ActiveSupport::TestCase
 
   test "using flunk" do
     post = Post.first
-    flunk("Post should have non-empty body") if post.body.empty?
+    if post.body.empty?
+      flunk("Post should have non-empty body")
+    end
   end
 
   test "all published posts should have a reviewer" do

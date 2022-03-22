@@ -24,7 +24,7 @@ class FixedAssertionlessTestsTest < ActiveSupport::TestCase
     end
   end
 
-  test "my code doesn't raise" do
+  test "passed if nothing raised" do
     assert_nothing_raised do
       MyCode.doesnt_raise
     end
