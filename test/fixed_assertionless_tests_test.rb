@@ -54,7 +54,7 @@ class FixedAssertionlessTestsTest < ActiveSupport::TestCase
   test "using custom message instead of flunk" do
     post = Post.first
     message = "Post should have non-empty body"
-    assert_predicate post.body, :present?
+    assert_predicate post.body, :present?, message
   end
 
   test "all published posts should have a reviewer" do
