@@ -44,11 +44,11 @@ class AssertionlessTestsTest < ActiveSupport::TestCase
     assert_equal "expected_value", my_object.execute_stored_block
   end
 
-  test "using flunk" do
-    post = Post.first
-    if post.body.empty?
-      flunk("Post should have non-empty body")
-    end
+  test "post has default body" do
+    post = Post.create
+    return if post.body == "draft body"
+
+    flunk("Post should have non-empty draft body")
   end
 
   test "all published posts should have a reviewer" do
